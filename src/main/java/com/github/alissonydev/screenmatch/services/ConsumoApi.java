@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 public class ConsumoApi {
 
-    private static final String YOUR_API_KEY = System.getenv("YOUR_API_KEY");
+
 
     public String obterDados(String endereco) {
 
@@ -18,7 +18,7 @@ public class ConsumoApi {
         try {
             client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(endereco + YOUR_API_KEY))
+                    .uri(URI.create(endereco))
                     .build();
 
             response = client
