@@ -1,5 +1,6 @@
 package com.github.alissonydev.screenmatch;
 
+import com.github.alissonydev.screenmatch.models.DadosEpisodio;
 import com.github.alissonydev.screenmatch.models.DadosSerie;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
 import com.github.alissonydev.screenmatch.services.ConverteDados;
@@ -33,10 +34,18 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
         url = "https://www.omdbapi.com/?t=gilmore+girls&apikey=";
         json = consumoApi.obterDados(url + YOUR_API_KEY);
+        System.out.println(url + YOUR_API_KEY);
         System.out.println(json);
 
         final ConverteDados conversor = new ConverteDados();
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         System.out.println(dados);
+
+        url = "https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=";
+        json = consumoApi.obterDados(url + YOUR_API_KEY);
+        DadosEpisodio episodio = conversor.obterDados(json, DadosEpisodio.class);
+        System.out.println("-----------------------------------");
+        System.out.println(episodio);
+
     }
 }
