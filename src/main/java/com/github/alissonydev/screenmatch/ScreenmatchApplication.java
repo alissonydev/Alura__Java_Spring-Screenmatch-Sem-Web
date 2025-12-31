@@ -1,6 +1,8 @@
 package com.github.alissonydev.screenmatch;
 
+import com.github.alissonydev.screenmatch.models.DadosSerie;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
+import com.github.alissonydev.screenmatch.services.ConverteDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +19,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        final String url = "https://www.omdbapi.com/?t=gilmore+girls&Seanson=1&apikey=";
+        String url = "https://www.omdbapi.com/?t=gilmore+girls&Seanson=1&apikey=";
 
         final ConsumoApi consumoApi = new ConsumoApi();
         var json = consumoApi.obterDados(url + YOUR_API_KEY);
@@ -28,5 +30,13 @@ public class ScreenmatchApplication implements CommandLineRunner {
         final String coffee_img = "https://coffee.alexflipnote.dev/random.json";
         json = consumoApi.obterDados(coffee_img);
         System.out.println(json);
+
+        url = "https://www.omdbapi.com/?t=gilmore+girls&apikey=";
+        json = consumoApi.obterDados(url + YOUR_API_KEY);
+        System.out.println(json);
+
+        final ConverteDados conversor = new ConverteDados();
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+        System.out.println(dados);
     }
 }
