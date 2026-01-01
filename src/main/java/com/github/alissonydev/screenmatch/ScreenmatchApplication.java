@@ -3,6 +3,7 @@ package com.github.alissonydev.screenmatch;
 import com.github.alissonydev.screenmatch.models.DadosEpisodio;
 import com.github.alissonydev.screenmatch.models.DadosSerie;
 import com.github.alissonydev.screenmatch.models.DadosTemporada;
+import com.github.alissonydev.screenmatch.principal.Principal;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
 import com.github.alissonydev.screenmatch.services.ConverteDados;
 import org.springframework.boot.CommandLineRunner;
@@ -79,5 +80,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
                 System.out.println("Episódio: " + epis.numero() + " - " + epis.titulo())
             );
         });
+
+        final Principal principal = new Principal();
+        principal.exibeMenu();
     }
 }
