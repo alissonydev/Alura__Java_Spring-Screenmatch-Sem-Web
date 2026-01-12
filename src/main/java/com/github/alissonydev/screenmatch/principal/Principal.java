@@ -6,9 +6,8 @@ import com.github.alissonydev.screenmatch.models.DadosTemporada;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
 import com.github.alissonydev.screenmatch.services.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -80,6 +79,33 @@ public class Principal {
                          " | Data de Lançamento: " + episodio.dataLancamento());
              });
          });
+
+         // Pegando os 5 episódios mais bem avaliados da nossa Série
+        // --------------------------------
+        final List<DadosEpisodio> dadosEpisodio = temporadas.stream()
+                .flatMap(t -> t.episodios()
+                        .stream())
+                .collect(Collectors.toList());// transforma em uma lista só e pode editar.
+                // .toList(); // transforma em uma lista imutável
+
+        System.out.println();
+        System.out.println("=== TOP 5 EPISÓDIOS MAIS BEM AVALIADOS ===");
+        //dadosEpisodio.forEach(System.out::println);
+        dadosEpisodio.stream()
+                .filter(e -> !e.avaliacao().equals("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                .limit(5)
+                .forEach(episodio -> System.out.println(episodio.titulo() + " - Avaliação: " + episodio.avaliacao()));
+            //    .forEach(System.out::println);
+
+
+
+
+//        Arrays.asList("A", "B", "C").forEach(System.out::println);
+//        final List<String> nomes = Arrays.asList("Jacque" , "Maria" , "Pedro");
+//
+//        nomes.stream().sorted().limit(3).filter(n -> n.startsWith("M")).map(String::toUpperCase)
+//                .forEach(System.out::println);
 
 
         // "https://www.omdbapi.com/?t=gilmore+girls&season=6585022c"
