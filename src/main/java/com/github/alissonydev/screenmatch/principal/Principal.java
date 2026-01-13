@@ -3,6 +3,7 @@ package com.github.alissonydev.screenmatch.principal;
 import com.github.alissonydev.screenmatch.models.DadosEpisodio;
 import com.github.alissonydev.screenmatch.models.DadosSerie;
 import com.github.alissonydev.screenmatch.models.DadosTemporada;
+import com.github.alissonydev.screenmatch.models.Episodio;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
 import com.github.alissonydev.screenmatch.services.ConverteDados;
 
@@ -97,6 +98,16 @@ public class Principal {
                 .limit(5)
                 .forEach(episodio -> System.out.println(episodio.titulo() + " - Avaliação: " + episodio.avaliacao()));
             //    .forEach(System.out::println);
+
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d))
+                ).collect(Collectors.toList());
+
+        System.out.println();
+        episodios.forEach(System.out::println);
+
+
 
 
 
