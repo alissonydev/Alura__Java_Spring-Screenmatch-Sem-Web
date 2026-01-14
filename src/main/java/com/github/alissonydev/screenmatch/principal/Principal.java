@@ -91,28 +91,43 @@ public class Principal {
                 .collect(Collectors.toList());// transforma em uma lista só e pode editar.
                 // .toList(); // transforma em uma lista imutável
 
-        System.out.println();
-        System.out.println("=== TOP 10 EPISÓDIOS MAIS BEM AVALIADOS ===");
-        //dadosEpisodio.forEach(System.out::println);
-        dadosEpisodio.stream()
-                .filter(e -> !e.avaliacao().equals("N/A"))
-                .peek(e -> System.out.println("Primeiro Filtro (N/A) " + e))
-                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .peek(e -> System.out.println("\nOrdenação " + e))
-                .limit(10)
-                .peek(e -> System.out.println("\nLimite " + e))
-                .map(e -> e.titulo().toUpperCase())
-                .peek(e -> System.out.println("\nMapeamento " + e))
-                //.forEach(e -> System.out.println(e.titulo() + " - Avaliação: " + e.avaliacao()));
-                .forEach(System.out::println);
-
-//        List<Episodio> episodios = temporadas.stream()
-//                .flatMap(t -> t.episodios().stream()
-//                        .map(d -> new Episodio(t.numero(), d))
-//                ).collect(Collectors.toList());
-//
 //        System.out.println();
-//        episodios.forEach(System.out::println);
+//        System.out.println("=== TOP 10 EPISÓDIOS MAIS BEM AVALIADOS ===");
+//        //dadosEpisodio.forEach(System.out::println);
+//        dadosEpisodio.stream()
+//                .filter(e -> !e.avaliacao().equals("N/A"))
+//                .peek(e -> System.out.println("Primeiro Filtro (N/A) " + e))
+//                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+//                .peek(e -> System.out.println("\nOrdenação " + e))
+//                .limit(10)
+//                .peek(e -> System.out.println("\nLimite " + e))
+//                .map(e -> e.titulo().toUpperCase())
+//                .peek(e -> System.out.println("\nMapeamento " + e))
+//                //.forEach(e -> System.out.println(e.titulo() + " - Avaliação: " + e.avaliacao()));
+//                .forEach(System.out::println);
+
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d))
+                ).collect(Collectors.toList());
+
+        System.out.println();
+        episodios.forEach(System.out::println);
+
+        System.out.println();
+        System.out.println("Digite um titulo para buscar o episódio:");
+        String tituloBusca = leitura.nextLine().toLowerCase();
+        final Optional<Episodio> episodioBuscado
+                = episodios.stream()
+                .filter(e -> e.getTitulo().toLowerCase().contains(tituloBusca))
+                .findFirst();
+
+        if (episodioBuscado.isPresent()) {
+            System.out.println("Episódio encontrado: " + episodioBuscado.get());
+            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+        } else {
+            System.out.println("Episódio não encontrado.");
+        }
 //
 //
 //        System.out.println();
