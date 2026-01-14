@@ -7,6 +7,8 @@ import com.github.alissonydev.screenmatch.models.Episodio;
 import com.github.alissonydev.screenmatch.services.ConsumoApi;
 import com.github.alissonydev.screenmatch.services.ConverteDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -108,8 +110,20 @@ public class Principal {
         episodios.forEach(System.out::println);
 
 
+        System.out.println();
+        System.out.println("A partir de que ano você deseja ver os episódios?");
+        int anoFiltro = Integer.parseInt(leitura.nextLine());
 
+        final LocalDate dataBusca = LocalDate.of(anoFiltro , 1 , 1);
 
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        episodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+                .forEach(episodio -> System.out.println(
+                        "Temporada: " + episodio.getTemporada() +
+                                " - Episódio: " + episodio.getNumeroEpisodio() +
+                                " | " + episodio.getTitulo() +
+                                " - Data de Lançamento: " + episodio.getDataLancamento().format(formatador)));
 
 
 //        Arrays.asList("A", "B", "C").forEach(System.out::println);
